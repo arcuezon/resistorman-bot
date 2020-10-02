@@ -1,0 +1,1 @@
+worker: ./src/python resistor-main.py
