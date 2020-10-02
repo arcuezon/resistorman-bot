@@ -1,1 +1,1 @@
-worker: ./src/python resistor-main.py
+worker: python ./src/resistor-main.py
