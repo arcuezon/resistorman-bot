@@ -6,8 +6,7 @@ import random
 import re
 
 #To-Do
-# 1. Bot commands
-# 2. More roles (fix dictionaries)
+# 1. Bot commands (?)
 
 #Text channel ids in the AECES Discord
 text_channels = {
@@ -18,14 +17,22 @@ text_channels = {
     "roles" : 760698326386999296
 }
 
-#Mappings for batch roles
+#Mappings for roles
 mapping = {
-    "🌱" : 763462230540812298,
-    "🍦" : 763462194473074718,
-    "🥲" : 763462159534653451,
-    "🧟‍♂️" : 763462130317131846,
-    "👨‍🎓" : 763461855578161192,
-    "👴" : 763462275277127682
+    763466119990083595:{
+        "🌱" : 763462230540812298,
+        "🍦" : 763462194473074718,
+        "🥲" : 763462159534653451,
+        "🧟‍♂️" : 763462130317131846,
+        "👨‍🎓" : 763461855578161192,
+        "👴" : 763462275277127682
+    },
+    763598798776827904:{
+        '⚽': 763595482429653043, 
+        '🎮': 763595543602921512, 
+        '📱': 763595591531102218,
+        '🔨' : 763598078258315275
+    }
 }
 
 #Batch roles message
@@ -57,14 +64,27 @@ def run_bot():
             f'{guild.name}(id: {guild.id})'
         )
 
-        #channel = client.get_channel(text_channels["roles"])
+        channel = client.get_channel(text_channels["roles"])
         #RULES Message
         #groovy = client.get_user(234395307759108106)
         # await channel.send(f"**1. First of all, kindly change your nickname!**\n To do this right click on your profile at the right side and click on 'Change Nickname' OR click the arrow beside the server name on the top left of your screen and click on 'Change Nickname'. Follow the format [Nickname || Yr. and Course]\n\n **2. This is a safe space. Be nice and respectful.**\n Discrimination, racism, homophobia, or any other derogatory behavior will not be tolerated on this server.\n\n **3. There are different topics for each respective channel. Please post content in the correct channels.**\n {groovy.mention} is bound to #📻music , use that channel for any music requests\n\n **4. Avoid spamming the chatrooms, leave announcements and recruitments in their respective channels. Do not ping other roles for unnecessary reasons.**\n\n **5. Don't forget to constantly check out the announcements tab for upcoming AECES events or changes in the server.**")
-        # ROLES Message
+        
+        #ROLES Message
         # message = await channel.send("Please react to this message with the following according to your batch\n🌱 : Batch 2025\n🍦 : Batch 2024\n🥲 : Batch 2023\n🧟‍♂️ : Batch 2022\n👨‍🎓 : Batch 2021\n👴 : Alumni")
         # for emoji in mapping:
         #     await message.add_reaction(emoji)
+        
+        #INTEREST ROLES Message
+        # content = "Please react to this message with your interests to be able to access the relevant channels!\n⚽ : Sports\n🎮 : Video Games\n📱 : Technology\n🔨 : Opportunities"
+        # message = await send_message(channel, content)
+        # emojis = ['⚽', '🎮', '📱', '🔨']
+        # for emoji in emojis:
+        #     await message.add_reaction(emoji)
+
+    #Message utility function
+    async def send_message(channel, content):
+        message = await channel.send(content)
+        return message
 
     #Reply to messages
     @client.event
@@ -122,33 +142,34 @@ def run_bot():
     #Role assignment
     @client.event
     async def on_raw_reaction_add(payload):
-        if(payload.message_id != batch_roles_id):
-            print("returned on message id")
-            return
-
-        if not str(payload.emoji) in mapping:
-            print("returned on mapping")
-            return
-
-        role = discord.utils.get(client.get_guild(payload.guild_id).roles, id=mapping[str(payload.emoji)])
-
-        await payload.member.add_roles(role)
+        await manage_roles(payload, True)
     
     @client.event
     async def on_raw_reaction_remove(payload):
+        await manage_roles(payload, False)
 
-        if(payload.message_id != batch_roles_id):
+    async def manage_roles(payload, add_role: bool):
+        
+        if not payload.message_id in mapping:
             print("returned on message id")
             return
 
-        if not str(payload.emoji) in mapping:
+        if not str(payload.emoji) in mapping[payload.message_id]:
             print("returned on mapping")
             return
 
-        role = discord.utils.get(client.get_guild(payload.guild_id).roles, id=mapping[str(payload.emoji)])
+        role_emoji = mapping[payload.message_id][str(payload.emoji)]
+        role = discord.utils.get(client.get_guild(payload.guild_id).roles, id=role_emoji)
         member = discord.utils.get(client.get_guild(payload.guild_id).members, id=payload.user_id)
 
-        await member.remove_roles(role)
+        if add_role:
+            await payload.member.add_roles(role)
+            msg = f"You have given yourself the **{role.name}** role on the **{role.guild} discord server**!"
+            await payload.member.send(content = msg)
+
+        else:
+            await member.remove_roles(role)
+        
         
 
     client.run(TOKEN)
