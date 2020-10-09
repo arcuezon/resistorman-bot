@@ -9,8 +9,11 @@ class resistor_man(commands.Bot):
     "welcome" : 760697489711693880,
     "announce" : 760702549643755530,
     "rules" : 760698388001325067,
-    "roles" : 760698326386999296
+    "roles" : 760698326386999296,
+    "resistor" : 763422998442016789
     }
+
+    resistorman_id = 760711591355744307
 
     def __init__(self, command_prefix = '!'):
         #Set Discord intents

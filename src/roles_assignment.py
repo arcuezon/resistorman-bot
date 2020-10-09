@@ -4,7 +4,7 @@ import discord
 
 class react_roles(commands.Cog):
 
-    # Mappings for roles
+    # Mappings for roles {message_id: {'emoji': role_id}}
     mapping = {
         763466119990083595: { #Batches
             "🌱": 763462230540812298,
@@ -19,6 +19,9 @@ class react_roles(commands.Cog):
             '🎮': 763595543602921512,
             '📱': 763595591531102218,
             '🔨': 763598078258315275
+        },
+        764011007042519060: {
+            '🔋': 764010409610313739
         }
     }
 
@@ -27,6 +30,8 @@ class react_roles(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
+        if payload.user_id == self.bot.resistorman_id:
+            return
         await self.manage_roles(self, payload, True)
 
     @commands.Cog.listener()

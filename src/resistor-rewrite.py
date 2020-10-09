@@ -8,7 +8,7 @@ def main():
     load_dotenv()
     bot = resistor_man()
 
-    cogs = ["greetings", "roles_assignment", "chat_responses"]
+    cogs = ["greetings", "roles_assignment", "chat_responses", "admin_commands"]
     for cog in cogs:
         bot.load_extension(cog)
 
