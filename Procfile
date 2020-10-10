@@ -1,1 +1,1 @@
-worker: python ./src/resistor-rewrite.py
+worker: python ./src/main_cog.py

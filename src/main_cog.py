@@ -1,3 +1,4 @@
+import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -15,6 +16,8 @@ class resistor_man(commands.Bot):
 
     resistorman_id = 760711591355744307
 
+    cogpath = os.path.join(os.path.dirname(__file__), "./cogs")
+
     def __init__(self, command_prefix = '!'):
         #Set Discord intents
         intents = discord.Intents.default()
@@ -23,7 +26,7 @@ class resistor_man(commands.Bot):
 
         commands.Bot.__init__(self, command_prefix = command_prefix, intents = intents)
         self.message1 = f"[INFO] Resistor Man is now online."
-        self.message2 = "Resistor man is online {}"
+        self.message2 = "Resistor man is online!"
 
         
     
@@ -31,3 +34,16 @@ class resistor_man(commands.Bot):
         guild = discord.utils.get(self.guilds, name = "AECES")
         print(self.message1)
         print(f"Connected to {guild.name} with ID: {guild.id}")
+    
+    
+def main():
+    load_dotenv()
+    bot = resistor_man()
+
+    for filename in os.listdir(bot.cogpath):
+        if filename.endswith('.py'):
+            bot.load_extension(f'cogs.{filename[0:-3]}')
+
+    bot.run(os.getenv('DISCORD_TOKEN'))
+
+main()

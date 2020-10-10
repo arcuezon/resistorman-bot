@@ -8,9 +8,9 @@ def main():
     load_dotenv()
     bot = resistor_man()
 
-    cogs = ["greetings", "roles_assignment", "chat_responses", "admin_commands"]
-    for cog in cogs:
-        bot.load_extension(cog)
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            bot.load_extension(f'cogs.{filename[0:-3]}')
 
     bot.run(os.getenv('DISCORD_TOKEN'))
 
