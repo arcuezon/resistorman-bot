@@ -11,7 +11,8 @@ class resistor_man(commands.Bot):
     "announce" : 760702549643755530,
     "rules" : 760698388001325067,
     "roles" : 760698326386999296,
-    "resistor" : 763422998442016789
+    "resistor" : 763422998442016789,
+    "jobs" : 761064541051944990
     }
 
     resistorman_id = 760711591355744307
