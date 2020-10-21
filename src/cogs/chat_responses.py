@@ -1,4 +1,5 @@
 from discord.ext import commands
+from random import randint
 import re
 
 class chat_responses(commands.Cog):
@@ -32,6 +33,9 @@ class chat_responses(commands.Cog):
 
         for prompt in self.responses:
             if prompt in user_message:
+                if prompt == "bong":
+                    if randint(1, 4) != 1:
+                        continue
                 channel = message.channel
                 await channel.send(self.responses[prompt])
 
