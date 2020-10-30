@@ -1,1 +1,0 @@
-worker: python ./src/main_cog.py
