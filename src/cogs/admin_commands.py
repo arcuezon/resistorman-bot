@@ -14,6 +14,8 @@ class admin_cmds(commands.Cog):
         channel_id = await self.get_channel(self, arg1)
         channel = discord.utils.get(ctx.guild.channels, id=channel_id)
 
+        print(f"msgc to {channel}")
+
         await channel.send(arg2)
 
     @commands.command(name = "react")
@@ -24,13 +26,18 @@ class admin_cmds(commands.Cog):
         channel_id = await self.get_channel(self, arg1)
         channel = discord.utils.get(ctx.guild.channels, id=channel_id)
         message = await channel.fetch_message(int(arg2))
+
+        print("react")
+
         await message.add_reaction(arg3)
 
     async def get_channel(self, ctx, channel_id):
         channel = 0
         if channel_id in self.bot.text_channels:
             channel = self.bot.text_channels[channel_id]
-        elif int(channel_id) in self.bot.text_channels.values():
+        #elif int(channel_id) in self.bot.text_channels.values():
+            #channel = int(channel_id)
+        else:
             channel = int(channel_id)
 
         return channel
