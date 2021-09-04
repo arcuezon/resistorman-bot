@@ -15,17 +15,14 @@ class react_roles(commands.Cog):
     # Mappings for roles {message_id: {'emoji': role_id}}
     mapping = {
 
-        763466119990083595: { #Batches #this is the message ID, change this message ID to the new message to where they would react
-            #new role for freshies batch 2026
-            #shift batch 2021 to alumni
-            #rename roles to matching batch
+        883618282647724062: { #Batches #this is the message ID, change this message ID to the new message to where they would react
             #change roleIDs respectively
-            "🌱": 763462230540812298, #change to batch 2026
-            "🍦": 763462194473074718, #change to batch 2025
-            "🙂": 763462159534653451, #change to batch 2024
-            "🧟‍♂️": 763462130317131846, #change to batch 2023
-            "👨‍🎓": 763461855578161192, #change to batch 2022
-            "👴": 763462275277127682 #move batch 2021 here
+            "🌱": 763462230540812298, 
+            "🍦": 763462194473074718, 
+            "🙂": 763462159534653451, 
+            "🧟‍♂️": 763462130317131846, 
+            "👨‍🎓": 763461855578161192, 
+            "👴": 763462275277127682 
         },
         763598798776827904: { #Interests
             '⚽': 763595482429653043,
